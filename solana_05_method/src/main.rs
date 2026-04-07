@@ -12,19 +12,19 @@ impl Inventory {
             max_capacity: capacity }
     }
 
-    // 2. Lógica de validación con &&
+    
     fn can_add(&self, coins: u32) -> bool {
-        self.coins >= 0 && self.coins + coins <= self.max_capacity
+        self.coins + coins <= self.max_capacity
     }
 
-    // 3. Método para modificar datos
+    
     fn add_coins(&mut self, coins: u32) {
 
         if self.can_add(coins) {
             self.coins += coins;
-            println!("¡Monedas añadidas! Total: {}", self.coins);
+            println!("¡Coins added! Total: {}", self.coins);
         } else {
-            println!("Error: No caben o cantidad inválida.");
+            println!("Error: No space available or invalid amount.");
         }
     }
 
@@ -38,5 +38,11 @@ fn main() {
 
     my_chest.add_coins(30); // Debería funcionar
     my_chest.add_coins(71); // Esto debería fallar por el límite
+
+    if my_chest.is_full() {
+        println!("Sorry, your chest is full.");
+    } else {
+        println!("Your remaining capacity is: {}", my_chest.max_capacity - my_chest.coins);
+    }
 
 }
