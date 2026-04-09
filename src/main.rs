@@ -1,3 +1,3 @@
 fn main() {
-    println!("Hello, rust!");
+    println!("Cap 6.2 Completed!");
 }
