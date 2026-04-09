@@ -1,8 +1,11 @@
+#[allow(dead_code)]
 enum OrderType {
     Market,
     Limit(f64)
 }
 
+#[derive(Debug)]
+#[allow(dead_code)]
 enum OrderState {
     Open,
     PartiallyFilled(f64),
@@ -33,5 +36,8 @@ fn main() {
 
     }
 
-    println!("Destino: {}", my_order.payout_address.unwrap_or("Dirección por defecto".into()))
+    println!("Destino: {}", my_order.payout_address.unwrap_or("Dirección por defecto".into()));
+
+    println!("\nId de orden: {}
+    \nEstado actual: {:?}", my_order.id, my_order.state);
 }
