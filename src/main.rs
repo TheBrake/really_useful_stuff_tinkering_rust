@@ -1,3 +1,3 @@
 fn main() {
-    println!("Cap 6.2 Completed!");
+    println!("Chap 6 Completed!, Entering to Chap 7!");
 }
