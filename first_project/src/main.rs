@@ -34,38 +34,47 @@ fn validar_opcion(valid: &u64) -> Option<BankInstruction> {
     //ahora el match que valida.
     match valid {
         1 => {
-            let ingreso: u64 = loop {
-                let mut añadir = String::new();
-                io::stdin()
-                    .read_line(&mut añadir)
-                    .expect("Error en la opcion");
+            //reducir codigo repetido, crear función para leer cantidad a depositar o retirar
+            fn read_amount() -> u64 {
+                loop {
+                    let mut amount_str = String::new();
+                    io::stdin()
+                        .read_line(&mut amount_str)
+                        .expect("Error en la opcion");
 
-                let _añadir: u64 = match añadir.trim().parse() {
-                    Ok(num) => break num,
-                    Err(_) => continue,
-                };
-            };
-            return Some(BankInstruction::Deposit(ingreso));
+                    match amount_str.trim().parse() {
+                        Ok(num) => return num,
+                        Err(_) => continue,
+                    };
+                }
+            }
+            return Some(BankInstruction::Deposit(read_amount()));
         }
         2 => {
-            let retiro: u64 = loop {
-                let mut restar = String::new();
+            //no me ayudes, lo hare solo en este caso, quiero practicar.
+            println!("Monto a retirar");
+
+            fn read_withdraw() -> u64 {
+                loop {
+                let mut withdraw_str = String::new();
                 io::stdin()
-                    .read_line(&mut restar)
+                    .read_line(&mut withdraw_str)
                     .expect("Error en la opcion");
 
-                let _restar: u64 = match restar.trim().parse() {
-                    Ok(num) => break num,
+                match withdraw_str.trim().parse() {
+                    Ok(num) => return num,
                     Err(_) => continue,
                 };
-            };
-            return Some(BankInstruction::Withdraw(retiro));
+            }
+            return Some(BankInstruction::Withdraw(read_withdraw()));
         }
+    }
+
         3 => {
             println!("Aqui se verá el balance");
             return Some(BankInstruction::ViewBalance);
         }
-        _ => None
+        _ => None,
     }
 }
 
