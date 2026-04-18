@@ -1,7 +1,8 @@
 use crate::state::UserAccount;
+use crate::BankInstruction;
 //Deposit
 
-fn add_deposit(account: &mut UserAccount, amount: u64) {
+pub fn add_deposit(account: &mut UserAccount, amount: u64) {
     let new_balance = account
         .balance
         .checked_add(amount)
@@ -12,7 +13,7 @@ fn add_deposit(account: &mut UserAccount, amount: u64) {
 
 //Withdraw
 
-fn add_withdraw(account: &mut UserAccount, amount: u64) {
+pub fn add_withdraw(account: &mut UserAccount, amount: u64) {
     if let Some(new_balance) = account.balance.checked_sub(amount) {
         account.balance = new_balance;
         println!("Retiro exitoso. Nuevo balance: {}", account.balance);
@@ -23,7 +24,7 @@ fn add_withdraw(account: &mut UserAccount, amount: u64) {
 
 //viewbalance
 
-fn view_balance(account: &UserAccount) {
+pub fn view_balance(account: &UserAccount) {
     println!("Saldo actual: {}", account.balance);
 }
 
