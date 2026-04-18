@@ -26,3 +26,11 @@ fn add_withdraw(account: &mut UserAccount, amount: u64) {
 fn view_balance(account: &UserAccount) {
     println!("Saldo actual: {}", account.balance);
 }
+
+pub fn process(instruccion: BankInstruction, account: &mut UserAccount){
+    match instruccion {
+        BankInstruction::Deposit(amount) => add_deposit(account, amount),
+        BankInstruction::Withdraw(amount) => add_withdraw(account, amount),
+        BankInstruction::ViewBalance => view_balance(account),
+    }
+}
