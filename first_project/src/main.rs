@@ -45,6 +45,7 @@ fn main() {
 }
 
 fn validar_opcion(valid: &u64) -> Option<BankInstruction> {
+    
     //ahora el match que valida.
     match valid {
         1 => {
