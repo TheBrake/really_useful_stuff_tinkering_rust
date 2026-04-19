@@ -12,83 +12,90 @@ pub enum BankInstruction {
 }
 
 fn main() {
-    println!("\nMenú de Opciones = 1) Depostar, 2) Retirar, 3) Ver saldo");
-
-    println!("\nPor favor Seleccione su Opción");
-
-    let result: u64 = loop {
-        let mut decition = String::new();
-        io::stdin()
-            .read_line(&mut decition)
-            .expect("Error en la opcion");
-
-        let _decition: u64 = match decition.trim().parse() {
-            Ok(num) => break num,
-            Err(_) => continue,
-        };
-    };
-
-    println!("\nSu opcion elegida es {result}");
-
     let mut zohar = UserAccount {
         owner: state::Pubkey(String::from("Zohar123...")),
         balance: 500,
     };
-    let opcion = validar_opcion(&result);
 
-    // llamamos al proceso.
-    if let Some(instruccion) = opcion {
-        process::process(instruccion, &mut zohar);
-    };
+    loop {
+        println!("\n///////////////////////////////////////////////////\n");
+        println!("Menú de Opciones = 1) Depostar, 2) Retirar, 3) Ver saldo, 4) Salir");
 
-    
-}
+        println!("\nPor favor Seleccione su Opción");
 
-fn validar_opcion(valid: &u64) -> Option<BankInstruction> {
-    
-    //ahora el match que valida.
-    match valid {
-        1 => {
-            println!("\nMonto a depositar: ↓");
+        let result: u64 = loop {
+            let mut decition = String::new();
+            io::stdin()
+                .read_line(&mut decition)
+                .expect("Error en la opcion");
 
-            fn read_amount() -> u64 {
-                loop {
-                    let mut amount_str = String::new();
-                    io::stdin()
-                        .read_line(&mut amount_str)
-                        .expect("Error en la opcion");
+            let _decition: u64 = match decition.trim().parse() {
+                Ok(num) => break num,
+                Err(_) => continue,
+            };
+        };
 
-                    match amount_str.trim().parse() {
-                        Ok(num) => return num,
-                        Err(_) => continue,
-                    };
-                }
-            }
-            return Some(BankInstruction::Deposit(read_amount()));
-        }
-        2 => {
-            println!("\nMonto a retirar: ↓");
+        println!("\nSu opcion elegida es {result}");
 
-            fn read_withdraw() -> u64 {
-                loop {
-                    let mut withdraw_str = String::new();
-                    io::stdin()
-                        .read_line(&mut withdraw_str)
-                        .expect("Error en la opcion");
+        let opcion = validar_opcion(&result);
 
-                    match withdraw_str.trim().parse() {
-                        Ok(num) => return num,
-                        Err(_) => continue,
-                    };
-                }
-            }
-            return Some(BankInstruction::Withdraw(read_withdraw()));
-        }
-
-        3 => {
-            return Some(BankInstruction::ViewBalance);
-        }
-        _ => None,
+        // llamamos al proceso.
+        if let Some(instruccion) = opcion {
+            process::process(instruccion, &mut zohar);
+        };
     }
 
+    fn validar_opcion(valid: &u64) -> Option<BankInstruction> {
+        //ahora el match que valida.
+        match valid {
+            1 => {
+                println!("\nMonto a depositar: ↓");
+
+                fn read_amount() -> u64 {
+                    loop {
+                        let mut amount_str = String::new();
+                        io::stdin()
+                            .read_line(&mut amount_str)
+                            .expect("Error en la opcion");
+
+                        match amount_str.trim().parse() {
+                            Ok(num) => return num,
+                            Err(_) => continue,
+                        };
+                    }
+                }
+                return Some(BankInstruction::Deposit(read_amount()));
+            }
+            2 => {
+                println!("\nMonto a retirar: ↓");
+
+                fn read_withdraw() -> u64 {
+                    loop {
+                        let mut withdraw_str = String::new();
+                        io::stdin()
+                            .read_line(&mut withdraw_str)
+                            .expect("Error en la opcion");
+
+                        match withdraw_str.trim().parse() {
+                            Ok(num) => return num,
+                            Err(_) => continue,
+                        };
+                    }
+                }
+                return Some(BankInstruction::Withdraw(read_withdraw()));
+            }
+
+            3 => {
+                return Some(BankInstruction::ViewBalance);
+            }
+            4 => {
+                println!("\nGracias por usar nuestro servicio, vuelva pronto!");
+                std::process::exit(0);
+            }
+            _ => {
+                println!("\nOpción no válida, por favor intente de nuevo.");
+                return None;
+            }
+        }
+    }
 }
