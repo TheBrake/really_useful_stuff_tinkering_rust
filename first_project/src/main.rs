@@ -12,9 +12,9 @@ pub enum BankInstruction {
 }
 
 fn main() {
-    println!("Menú de Opciones = 1) Depostar, 2) Retirar, 3) Ver saldo");
+    println!("\nMenú de Opciones = 1) Depostar, 2) Retirar, 3) Ver saldo");
 
-    println!("Por favor Seleccione su Opción");
+    println!("\nPor favor Seleccione su Opción");
 
     let result: u64 = loop {
         let mut decition = String::new();
@@ -28,16 +28,27 @@ fn main() {
         };
     };
 
-    println!("Su opcion elegida es {result}");
+    println!("\nSu opcion elegida es {result}");
 
+    let mut zohar = UserAccount {
+        owner: state::Pubkey(String::from("Zohar123...")),
+        balance: 500,
+    };
     let opcion = validar_opcion(&result);
+
+    // llamamos al proceso.
+    if let Some(instruccion) = opcion {
+        process::process(instruccion, &mut zohar);
+    };
+
+    
 }
 
 fn validar_opcion(valid: &u64) -> Option<BankInstruction> {
     //ahora el match que valida.
     match valid {
         1 => {
-            println!("Monto a depositar");
+            println!("\nMonto a depositar: ↓");
 
             fn read_amount() -> u64 {
                 loop {
@@ -55,7 +66,7 @@ fn validar_opcion(valid: &u64) -> Option<BankInstruction> {
             return Some(BankInstruction::Deposit(read_amount()));
         }
         2 => {
-            println!("Monto a retirar");
+            println!("\nMonto a retirar: ↓");
 
             fn read_withdraw() -> u64 {
                 loop {
@@ -74,18 +85,9 @@ fn validar_opcion(valid: &u64) -> Option<BankInstruction> {
         }
 
         3 => {
-            fn read_view_balance() -> BankInstruction {
-                BankInstruction::ViewBalance
-            }
-            return Some(read_view_balance());
+            return Some(BankInstruction::ViewBalance);
         }
         _ => None,
     }
-}
 
-fn user_account() {
-    let _zohar = UserAccount {
-        owner: state::Pubkey(String::from("Zohar123...")),
-        balance: 500,
-    };
 }
