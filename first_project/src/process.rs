@@ -8,7 +8,7 @@ fn add_deposit(account: &mut UserAccount, amount: u64) {
         .checked_add(amount)
         .expect("Overflow al añadir el depósito");
     account.balance = new_balance;
-    println!("Depósito exitoso. Nuevo balance: {}", account.balance);
+    println!("\nDepósito exitoso. Nuevo balance: {}", account.balance);
 }
 
 //Withdraw
@@ -16,16 +16,16 @@ fn add_deposit(account: &mut UserAccount, amount: u64) {
 fn add_withdraw(account: &mut UserAccount, amount: u64) {
     if let Some(new_balance) = account.balance.checked_sub(amount) {
         account.balance = new_balance;
-        println!("Retiro exitoso. Nuevo balance: {}", account.balance);
+        println!("\nRetiro exitoso. Nuevo balance: {}", account.balance);
     } else {
-        eprintln!("Fondos insuficientes");
+        eprintln!("\nFondos insuficientes");
     }
 }
 
 //viewbalance
 
 fn view_balance(account: &UserAccount) {
-    println!("Saldo actual: {}", account.balance);
+    println!("\nSaldo actual: {}", account.balance);
 }
 
 pub fn process(instruccion: BankInstruction, account: &mut UserAccount){
